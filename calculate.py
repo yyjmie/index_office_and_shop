@@ -56,6 +56,22 @@ def sale_or_rent_index_calculate(index_file, sale_file, save_file, this_month):
 def index_rate(index_file, save_file, this_month):
 
 	one_year_ago = arrow.get(this_month, 'YYYY-MM').shift(years=-1).format('YYYY-MM')
-	three_year_ago = arrow.get(this_month, 'YYYY')
+	three_year_ago = arrow.get(this_month, 'YYYY-MM').shift(years=-3).format('YYYY-MM')
+	five_year_ago = arrow.get(this_month, 'YYYY-MM').shift(years=-5).format('YYYY-MM')
+
+	df = pd.read_csv(index_file, usecols=['city', this_month, one_year_ago, three_year_ago, five_year_ago])
+	print(df.head(10))
+
+	df['one_year_rate'] = df[this_month]/df[one_year_ago]-1
+	df['three_year_rate'] = df[this_month]/df[three_year_ago]-1
+	df['five_year_rate'] = df[this_month]/df[five_year_ago]-1
+
+	df = df.dropna()
+
+	df['one_year_rate'] = df['one_year_rate'].apply(lambda x: '{:.2%}'.format(x))
+	df['three_year_rate'] = df['three_year_rate'].apply(lambda x: '{:.2%}'.format(x))
+	df['five_year_rate'] = df['five_year_rate'].apply(lambda x: '{:.2%}'.format(x))
+	
+	df.to_csv(save_file, columns=['city', this_month, 'one_year_rate', 'three_year_rate', 'five_year_rate'], index=False)
 
 

@@ -46,5 +46,16 @@ while month != '2019-04':
 '''
 
 # calculate investment index rate in month
-# cal.index_rate('office_index.csv', 'office_index_rate.csv', month)
-# cal.index_rate('shop_index.csv', 'shop_index_rate.csv', month)
+'''
+cal.index_rate('office_index.csv', 'office_index_rate_2018_03.csv', '2018-03')
+cal.index_rate('office_index.csv', 'office_index_rate_2018_06.csv', '2018-06')
+cal.index_rate('office_index.csv', 'office_index_rate_2018_09.csv', '2018-09')
+cal.index_rate('office_index.csv', 'office_index_rate_2018_12.csv', '2018-12')
+cal.index_rate('office_index.csv', 'office_index_rate_2019_03.csv', '2019-03')
+
+cal.index_rate('shop_index.csv', 'shop_index_rate_2018_03.csv', '2018-03')
+cal.index_rate('shop_index.csv', 'shop_index_rate_2018_06.csv', '2018-06')
+cal.index_rate('shop_index.csv', 'shop_index_rate_2018_09.csv', '2018-09')
+cal.index_rate('shop_index.csv', 'shop_index_rate_2018_12.csv', '2018-12')
+cal.index_rate('shop_index.csv', 'shop_index_rate_2019_03.csv', '2019-03')
+'''

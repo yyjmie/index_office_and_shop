@@ -43,23 +43,4 @@ def merge(property_type, month):
 
 	return merged
 
-'''
-df_office_1 = merge('office', '2018-1')
-df_office_2 = merge('office', '2018-2')
-df_office_3 = merge('office', '2018-3')
-df_office_4 = merge('office', '2018-4')
-df_office_5 = merge('office', '2019-1')
-
-df_shop_1 = merge('shop', '2018-1')
-df_shop_2 = merge('shop', '2018-2')
-df_shop_3 = merge('shop', '2018-3')
-df_shop_4 = merge('shop', '2018-4')
-df_shop_5 = merge('shop', '2019-1')
-
-pieces = [df_office_1,df_office_2,df_office_3,df_office_4,df_office_5,df_shop_1,df_shop_2,df_shop_3,df_shop_4,df_shop_5]
-
-df = pd.concat(pieces, ignore_index=True)
-
-df.to_csv('submit.csv', index=False)
-'''
 

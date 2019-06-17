@@ -2,8 +2,14 @@ import calculate as cal
 import merge as mg
 import arrow
 
+
+# define global variables
+
 start_month = '2018-01'
 end_month = '2019-04'
+
+start_season = '2018-1'
+end_season = '2019-2'
 
 # calculate office and shop investment index from start_month to end_month
 
@@ -33,13 +39,10 @@ while month != end_month:
 	month = arrow.get(month, 'YYYY-MM').shift(months=1).format('YYYY-MM')
 
 
-start_season = '2018-1'
-end_season = '2019-2'
-
 start_month = mg.season_to_month(start_season)
 end_month = mg.season_to_month(end_season)
 
-# calculate investment index rate 
+# calculate investment index rate and save
 
 month = start_month
 while month != end_month:
@@ -50,7 +53,7 @@ while month != end_month:
 	month = arrow.get(month, 'YYYY-MM').shift(months=3).format('YYYY-MM')
 
 
-# merge all csv files
+# merge all csv files to  a submit file
 
 pieces = []
 

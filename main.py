@@ -5,7 +5,7 @@ import arrow
 start_month = '2018-01'
 end_month = '2019-04'
 
-# calculate office&&shop investment index from start_month to end_month
+# calculate office and shop investment index from start_month to end_month
 
 month = start_month
 while month != end_month:
@@ -32,19 +32,38 @@ while month != end_month:
 
 	month = arrow.get(month, 'YYYY-MM').shift(months=1).format('YYYY-MM')
 
-# calculate investment index 
 
-'''
-cal.index_rate('office_index.csv', 'office_index_rate_2018-03.csv', '2018-03')
-cal.index_rate('office_index.csv', 'office_index_rate_2018-06.csv', '2018-06')
-cal.index_rate('office_index.csv', 'office_index_rate_2018-09.csv', '2018-09')
-cal.index_rate('office_index.csv', 'office_index_rate_2018-12.csv', '2018-12')
-cal.index_rate('office_index.csv', 'office_index_rate_2019-03.csv', '2019-03')
+start_season = '2018-1'
+end_season = '2019-2'
 
-cal.index_rate('shop_index.csv', 'shop_index_rate_2018-03.csv', '2018-03')
-cal.index_rate('shop_index.csv', 'shop_index_rate_2018-06.csv', '2018-06')
-cal.index_rate('shop_index.csv', 'shop_index_rate_2018-09.csv', '2018-09')
-cal.index_rate('shop_index.csv', 'shop_index_rate_2018-12.csv', '2018-12')
-cal.index_rate('shop_index.csv', 'shop_index_rate_2019-03.csv', '2019-03')
-'''
+start_month = mg.season_to_month(start_season)
+end_month = mg.season_to_month(end_season)
 
+# calculate investment index rate 
+
+month = start_month
+while month != end_month:
+
+	cal.index_rate('office_index.csv', 'office_index_rate_'+month+'.csv', month)
+	cal.index_rate('shop_index.csv', 'shop_index_rate_'+month+'.csv', month)
+
+	month = arrow.get(month, 'YYYY-MM').shift(months=3).format('YYYY-MM')
+
+
+# merge all csv files
+
+pieces = []
+
+month = start_month
+while month != end_month:
+
+	df_office = mg.merge('office', month)
+	df_shop = mg.merge('shop', month)
+
+	pieces.append(df_office)
+	pieces.append(df_shop)
+
+	month = arrow.get(month, 'YYYY-MM').shift(months=3).format('YYYY-MM')
+
+df = pd.concat(pieces, ignore_index=True)
+df.to_csv('submit.csv', index=False)

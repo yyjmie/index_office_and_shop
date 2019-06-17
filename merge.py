@@ -1,16 +1,25 @@
 import pandas as pd
 import numpy as np
 
-def extract_month(season):
-	num = int(season[-1])
-	month = str(3*num)
+def season_to_month(season):
+	year_season = season.split('-')
+	year = year_season[0]
+	season = year_season[1]
+	month = str(int(season)*3)
 	if len(month)==1:
 		month = '0'+month
-	year_month = season[0:5]+month
+	year_month = year+'-'+month
 	return year_month
 
-def merge(property_type, season):
-	month = extract_month(season)
+def month_to_season(month):
+	year_month = month.split('-')
+	year = year_month[0]
+	month = year_month[1]
+	season = str(int(int(month)/3))
+	year_season = year+'-'+season
+	return year_season
+
+def merge(property_type, month):
 
 	df = pd.read_csv(property_type+'_index.csv', usecols=['city', month])
 	df.rename(columns={month:'investment_income_index'}, inplace=True)
@@ -27,7 +36,7 @@ def merge(property_type, season):
 	merged = pd.merge(df, df1, on='city', how='outer')
 	merged = pd.merge(merged, df2, on='city', how='outer')
 	merged = pd.merge(merged, df3, on='city', how='outer')
-	merged['year_months'] = season
+	merged['year_months'] = month_to_season(month)
 	if property_type=='shop':
 		property_type='business'
 	merged['property_type'] = property_type

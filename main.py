@@ -1,16 +1,41 @@
 import calculate as cal
 import merge as mg
+import preprocess as pp
 import arrow
 
 
 # define global variables
 
-start_month = '2018-01'
-end_month = '2019-04'
+start_month = '2019-04'
+end_month = '2019-05'
 
 start_season = '2018-1'
 end_season = '2019-2'
 
+# merge new sale and rent file to the big table
+
+month = start_month
+while month != end_month:
+
+	pp.json_to_csv("office_sale_"+month+".json", "mid1.csv", month)
+	pp.preprocess("mid1.csv", "mid2.csv", month)
+	cal.save_table("office_sale.csv", "mid2.csv", month)
+
+	pp.json_to_csv("office_rent_"+month+".json", "mid1.csv", month)
+	pp.preprocess("mid1.csv", "mid2.csv", month)
+	cal.save_table("office_rent.csv", "mid2.csv", month)
+
+	pp.json_to_csv("shop_sale_"+month+".json", "mid1.csv", month)
+	pp.preprocess("mid1.csv", "mid2.csv", month)
+	cal.save_table("shop_sale.csv", "mid2.csv", month)
+
+	pp.json_to_csv("shop_rent_"+month+".json", "mid1.csv", month)
+	pp.preprocess("mid1.csv", "mid2.csv", month)
+	cal.save_table("shop_rent.csv", "mid2.csv", month)
+
+	month = arrow.get(month, 'YYYY-MM').shift(months=1).format('YYYY-MM')
+
+'''
 # calculate office and shop investment index from start_month to end_month
 
 month = start_month
@@ -70,3 +95,4 @@ while month != end_month:
 
 df = pd.concat(pieces, ignore_index=True)
 df.to_csv('submit.csv', index=False)
+'''

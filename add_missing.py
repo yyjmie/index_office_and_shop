@@ -33,28 +33,17 @@ def show_missing_val_information(df):
 	min_val = df.min()
 	print(min_val[min_val<=0])
 
+file_list = ['office_sale.csv', 'office_rent.csv', 'shop_sale.csv', 'shop_rent.csv']
 
-file_name = 'office_sale.csv'
-df = pd.read_csv(file_name, index_col=['city']).T.loc['2018-01':]
-print(file_name+' missing or abnormal values information:')
-show_missing_val_information(df)
-draw_plot(df['青岛'])
+# show missing values information
+for file in file_list:
+	df = pd.read_csv(file, index_col=['city']).T
+	print(file+' missing or abnormal values information:')
+	show_missing_val_information(df)	
 
-file_name = 'office_rent.csv'
-df = pd.read_csv(file_name, index_col=['city']).T.loc['2018-01':]
-print(file_name+' missing or abnormal values information:')
-show_missing_val_information(df)
-draw_plot(df['兰州'])
-draw_plot(df['哈尔滨'])
-
-file_name = 'shop_sale.csv'
-df = pd.read_csv(file_name, index_col=['city']).T.loc['2018-01':]
-print(file_name+' missing or abnormal values information:')
-show_missing_val_information(df)
-
-file_name = 'shop_rent.csv'
-df = pd.read_csv(file_name, index_col=['city']).T.loc['2018-01':]
-print(file_name+' missing or abnormal values information:')
-show_missing_val_information(df)
-draw_plot(df['重庆'])
+# fill in the missing values using interpolate method
+for file in file_list:
+	df = pd.read_csv(file, index_col=['city'])
+	df = df.interpolate(axis=1)
+	df.to_csv(file)
 

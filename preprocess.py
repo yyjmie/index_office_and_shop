@@ -101,7 +101,8 @@ def json_to_csv(from_file, to_file, this_month):
 
 # 选列、nan
 def preprocess(from_file, to_file, this_month):
-	df = pd.read_csv(from_file, usecols = ['city', this_month], na_values = 'na')
+	df = pd.read_csv(from_file, usecols = ['city', this_month], na_values = 'na') # replace nan value 
+	df = df.drop_duplicates('city') # remove duplicates
 	df.to_csv(to_file, index = False)
 
 

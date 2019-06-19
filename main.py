@@ -6,8 +6,8 @@ import arrow
 
 # define global variables
 
-start_month = '2019-04'
-end_month = '2019-05'
+start_month = '2019-05'
+end_month = '2019-06'
 
 start_season = '2018-1'
 end_season = '2019-2'
